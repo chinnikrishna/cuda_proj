@@ -1,0 +1,41 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "CUDA - Profile with Nsight",
+            "type": "cuda-gdb",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/cuda_app",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "cuda-gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for cuda-gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "make"
+        },
+        {
+            "name": "CUDA - Nsight Systems Profile",
+            "type": "shell",
+            "request": "launch",
+            "command": "nsys profile --stats=true ${workspaceFolder}/build/cuda_app",
+            "problemMatcher": [],
+            "preLaunchTask": "make"
+        },
+        {
+            "name": "CUDA - Nsight Compute Profile",
+            "type": "shell",
+            "request": "launch",
+            "command": "ncu --metrics gpu__time_duration.sum,sm__warps_active.avg,dram__throughput.avg ${workspaceFolder}/build/cuda_app",
+            "problemMatcher": [],
+            "preLaunchTask": "make"
+        }
+    ]
+}
